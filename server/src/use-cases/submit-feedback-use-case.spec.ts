@@ -20,6 +20,16 @@ describe('Submit Feedback Use Case', () => {
     expect(sendMailSpy).toHaveBeenCalled()
   })
 
+  it('should be able to submit feedback without screenshot', async () => {
+    await expect(submitFeedback.execute({
+      type: 'BUG',
+      comment: 'example comment',
+    })).resolves.not.toThrow()
+
+    expect(createFeedbackSpy).toHaveBeenCalled()
+    expect(sendMailSpy).toHaveBeenCalled()
+  })
+
   it('should not be able to submit feedback with invalid screenshot', async () => {
     await expect(submitFeedback.execute({
       type: 'BUG',
