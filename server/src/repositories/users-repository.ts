@@ -8,5 +8,5 @@ export type CreateUserDTO = {
 
 export interface UsersRepository {
   create: (data: CreateUserDTO) => Promise<User>;
-  findByEmail: (email: string) => Promise<User | undefined>;
+  findByEmail: (email: string) => Promise<User | null>;
 }
