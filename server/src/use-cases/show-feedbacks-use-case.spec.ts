@@ -14,6 +14,7 @@ describe('Show Feedbacks Use Case', () => {
     await fakeFeedbacksRepository.create({
       comment: 'fake comment',
       type: 'BUG',
+      creatorId: 'fake-user-id',
     })
 
     const feedbacks = await showFeedbacks.execute()
@@ -26,6 +27,7 @@ describe('Show Feedbacks Use Case', () => {
       await fakeFeedbacksRepository.create({
         comment: `fake comment ${i}`,
         type: 'BUG',
+        creatorId: 'fake-user-id',
       })
     }
 

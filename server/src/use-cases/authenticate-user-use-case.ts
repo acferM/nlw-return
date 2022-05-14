@@ -17,6 +17,7 @@ interface AuthenticateUserUseCaseResponse {
 export class AuthenticateUserUseCase {
   constructor(
     private usersRepository: UsersRepository,
+
     private hashAdapter: HashAdapter
   ) { }
 

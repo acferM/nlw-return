@@ -10,6 +10,7 @@ interface CreateUserRequest {
 export class CreateUserUseCase {
   constructor(
     private userRepository: UsersRepository,
+
     private hashAdapter: HashAdapter
   ) { }
 
