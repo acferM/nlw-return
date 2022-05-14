@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for authenticate-user-use-case.ts</title>
+    <title>Code coverage report for create-user-use-case.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> authenticate-user-use-case.ts</h1>
+        <h1><a href="index.html">All files</a> create-user-use-case.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/43</span>
+                <span class='fraction'>33/33</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>43/43</span>
+                <span class='fraction'>33/33</span>
             </div>
         
             
@@ -95,17 +95,7 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -116,78 +106,58 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { User } from "@prisma/client";
-import { sign } from "jsonwebtoken";
-import { HashAdapter } from "../adapters/hash-adapter";
-import { AppError } from "../errors/AppError";
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { HashAdapter } from "../adapters/hash-adapter";
 import { UsersRepository } from "../repositories/users-repository";
 &nbsp;
-interface AuthenticateUserUseCaseRequest {
+interface CreateUserRequest {
+  name: string;
   email: string;
   password: string;
 }
 &nbsp;
-interface AuthenticateUserUseCaseResponse {
-  token: string;
-  user: User;
-}
-&nbsp;
-export class AuthenticateUserUseCase {
+export class CreateUserUseCase {
   constructor(
-    private usersRepository: UsersRepository,
+    private userRepository: UsersRepository,
     private hashAdapter: HashAdapter
   ) { }
 &nbsp;
-  async execute({ email, password }: AuthenticateUserUseCaseRequest): Promise&lt;AuthenticateUserUseCaseResponse&gt; {
-    const user = await this.usersRepository.findByEmail(email)
+  async execute({ name, email, password }: CreateUserRequest) {
+    const userExists = await this.userRepository.findByEmail(email)
 &nbsp;
-    if (!user) {
-      throw new AppError('User not found', 404)
+    if (userExists) {
+      throw new Error('User already exists')
     }
 &nbsp;
-    const passwordMatches = await this.hashAdapter.compare(password, user.password)
+    const hashedPassword = await this.hashAdapter.hash(password)
 &nbsp;
-    if (!passwordMatches) {
-      throw new AppError('Wrong email/password combination', 401)
-    }
-&nbsp;
-    const token = sign({}, String(process.env.JWT_SECRET), {
-      subject: user.id,
-      expiresIn: '1d',
+    const user = await this.userRepository.create({
+      name,
+      email,
+      password: hashedPassword
     })
 &nbsp;
-    return { token, user }
+    return user
   }
 }</pre></td></tr></table></pre>
 
