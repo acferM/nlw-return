@@ -23,6 +23,14 @@ export class PrismaFeedbacksRepository implements FeedbacksRepository {
       skip: 9 * (page - 1),
       orderBy: {
         createdAt: "desc"
+      },
+      include: {
+        creator: {
+          select: {
+            name: true,
+            password: false,
+          }
+        }
       }
     })
   }
