@@ -11,12 +11,14 @@
 
 import { FormEvent, useCallback, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { Input } from "../components/Input"
+import { Loading } from "../components/Loading"
 import { useAuth } from "../hooks/useAuth"
-import { api } from "../libs/api"
 
 export function Signin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isSigningIn, setIsSigninIn] = useState(false)
 
   const { signIn } = useAuth()
 
@@ -25,8 +27,11 @@ export function Signin() {
   const handleSignIn = useCallback(async (event: FormEvent) => {
     event.preventDefault()
 
+    setIsSigninIn(true)
+
     await signIn(email, password)
 
+    setIsSigninIn(true)
     navigate('/dashboard')
   }, [email, password])
 
@@ -38,27 +43,26 @@ export function Signin() {
       >
         <h1 className="text-zinc-800 dark:text-zinc-100 font-bold text-2xl transition-colors">Faça login</h1>
 
-        <input
+        <Input
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          handleOnChange={setEmail}
           className="w-38 p-2 rounded bg-zinc-200 dark:bg-zinc-700 border-0 mt-4 focus:outline-2 focus:outline-brand-300 focus:ring-0 transition-colors"
         />
-        <input
+        <Input
           type="password"
           placeholder="Senha"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="w-38 p-2 rounded bg-zinc-200 dark:bg-zinc-700 border-0 mt-4 focus:outline-2 focus:outline-brand-300 focus:ring-0 transition-colors"
+          handleOnChange={setPassword}
         />
 
         <button
           type="submit"
-          disabled={!email && !password}
+          disabled={!email || !password}
           className="mt-4 p-2 rounded bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 focus:outline-2 focus:outline-brand-300 focus:ring-0 focus:border-0 transition-colors disabled:opacity-30 disabled:hover:bg-zinc-300 disabled:dark:hover:bg-zinc-700"
         >
-          Entrar
+          {isSigningIn ? <Loading /> : 'Entrar'}
         </button>
 
         <p className="mt-4 text-sm text-center text-zinc-500 dark:text-zinc-400 transition-color">Não é cadastrado ?
