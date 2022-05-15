@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FeedbackList } from "../components/FeedbackList";
 import { Loading } from "../components/Loading";
 import { FeedbackType } from "../components/WidgetForm";
@@ -35,6 +36,14 @@ export function Dashboard() {
   const [isLoadingFeedbacks, setIsLoadingFeedbacks] = useState(false)
 
   const { token } = useAuth()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/')
+    }
+  }, [])
 
   useEffect(() => {
     async function loadFeedbacks() {
@@ -80,7 +89,7 @@ export function Dashboard() {
     <div className="w-[100%] py-2 px-20">
       <FeedbackList feedbacks={feedbacks} />
 
-      <div className="bg-red-100">
+      <footer className="mt-4 py-2 flex justify-center">
         <button
           type="submit"
           disabled={!hasNextPage || isLoadingFeedbacks}
@@ -89,7 +98,7 @@ export function Dashboard() {
         >
           {isLoadingFeedbacks ? <Loading /> : 'Carregar mais'}
         </button>
-      </div>
+      </footer>
     </div>
   )
 }
