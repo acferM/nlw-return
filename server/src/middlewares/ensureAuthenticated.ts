@@ -27,8 +27,6 @@ export function EnsureAuthenticated(
       id: sub,
     }
 
-    console.log('here')
-
     return next();
   } catch {
     throw new AppError('Invalid JWT', 401)

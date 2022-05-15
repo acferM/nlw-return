@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { Input } from "../components/Input"
 import { Loading } from "../components/Loading"
 import { useAuth } from "../hooks/useAuth"
@@ -20,17 +21,23 @@ export function Signup() {
 
     setIsRegistering(true)
 
-    await api.post('/users', {
-      name,
-      email,
-      password,
-    })
+    try {
+      await api.post('/users', {
+        name,
+        email,
+        password,
+      })
 
-    await signIn(email, password)
+      await signIn(email, password)
 
-    setIsRegistering(false)
+      setIsRegistering(false)
 
-    navigate('/dashboard')
+      navigate('/dashboard')
+    } catch (error) {
+      toast.error('Não foi possível realizar o cadastro, tente novamente!')
+
+      setIsRegistering(false)
+    }
   }, [])
 
   return (

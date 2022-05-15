@@ -1,4 +1,5 @@
 import { HashAdapter } from "../adapters/hash-adapter";
+import { AppError } from "../errors/AppError";
 import { UsersRepository } from "../repositories/users-repository";
 
 interface CreateUserRequest {
@@ -18,7 +19,7 @@ export class CreateUserUseCase {
     const userExists = await this.userRepository.findByEmail(email)
 
     if (userExists) {
-      throw new Error('User already exists')
+      throw new AppError('User already exists')
     }
 
     const hashedPassword = await this.hashAdapter.hash(password)

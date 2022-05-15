@@ -1,7 +1,9 @@
+import { ToastContainer } from "react-toastify"
 import { ThemeSwitcher } from "./components/ThemeSwitcher"
 import { Widget } from "./components/Widget"
 import { AuthContextProvider } from "./context/auth"
 import { Routes } from "./routes"
+import 'react-toastify/dist/ReactToastify.css'
 
 export function App() {
   return (
@@ -11,6 +13,11 @@ export function App() {
         <ThemeSwitcher />
         <Widget />
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        pauseOnHover={false}
+      />
     </AuthContextProvider>
   )
 }

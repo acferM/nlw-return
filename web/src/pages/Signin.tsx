@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { Input } from "../components/Input"
 import { Loading } from "../components/Loading"
 import { useAuth } from "../hooks/useAuth"
@@ -18,10 +19,16 @@ export function Signin() {
 
     setIsSigninIn(true)
 
-    await signIn(email, password)
+    try {
+      await signIn(email, password)
 
-    setIsSigninIn(true)
-    navigate('/dashboard')
+      setIsSigninIn(false)
+      navigate('/dashboard')
+    } catch (error) {
+      toast.error('Não foi possível realizar o login, verifique se seu email e senha estão corretos!')
+
+      setIsSigninIn(false)
+    }
   }, [email, password])
 
   return (

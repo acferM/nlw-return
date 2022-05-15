@@ -18,6 +18,8 @@ const prismaFeedbacksRepository = new PrismaFeedbacksRepository()
 const prismaUsersRepository = new PrismaUsersRepository()
 
 routes.post('/feedbacks', EnsureAuthenticated, async (req, res) => {
+  console.log('here')
+
   const { type, comment, screenshot } = req.body
 
   const submitFeedbackUseCase = new SubmitFeedbackUseCase(
