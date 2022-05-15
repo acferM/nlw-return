@@ -1,6 +1,7 @@
 import { ArrowLeft } from "phosphor-react";
 import { FormEvent, useCallback, useState } from "react";
 import { FeedbackType, feedbackTypes } from "..";
+import { useAuth } from "../../../hooks/useAuth";
 import { api } from "../../../libs/api";
 import { CloseButton } from "../../CloseButton";
 import { Loading } from "../../Loading";
@@ -23,14 +24,22 @@ export function FeedbackContentStep({
 
   const feedbackTypeInfo = feedbackTypes[feedbackType];
 
+  const { token } = useAuth()
+
   const handleSubmitFeedback = useCallback(async (event: FormEvent) => {
     event.preventDefault();
     setIsSendingFeedback(true)
+
+    console.log(token)
 
     await api.post('feedbacks', {
       type: feedbackType,
       comment,
       screenshot,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
 
     setIsSendingFeedback(false)

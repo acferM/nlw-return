@@ -1,14 +1,3 @@
-// type Feedback = {
-//   id: string
-//   type: FeedbackType
-//   comment: string
-//   screenshot: string
-//   createdAt: Date
-//   creator: {
-//     name: string
-//   }
-// }
-
 import { FormEvent, useCallback, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Input } from "../components/Input"

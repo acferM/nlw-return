@@ -6,7 +6,7 @@ import { Routes } from "./routes"
 export function App() {
   return (
     <AuthContextProvider>
-      <div className="flex w-[100%] h-[100vh] p-4 bg-white dark:bg-[#09090A] text-zinc-800 dark:text-zinc-100 transition-colors">
+      <div className="flex w-[100%] min-h-[100vh] p-4 bg-white dark:bg-[#09090A] text-zinc-800 dark:text-zinc-100 transition-colors">
         <Routes />
         <ThemeSwitcher />
         <Widget />
