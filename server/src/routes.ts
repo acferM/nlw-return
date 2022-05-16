@@ -8,24 +8,24 @@ import { CreateUserUseCase } from "./use-cases/create-user-use-case";
 import { EnsureAuthenticated } from "./middlewares/ensureAuthenticated";
 import { ShowFeedbacksUseCase } from "./use-cases/show-feedbacks-use-case";
 import { AuthenticateUserUseCase } from "./use-cases/authenticate-user-use-case";
+import { MailgunMailAdapter } from "./adapters/implementations/mailgun/mailgun-mail-adapter";
 
 const routes = Router()
 
 const nodemailerMailAdapter = new NodemailerMailAdapter()
 const bcryptHashAdapter = new BcryptHashAdapter()
+const mailgunMailAdapter = new MailgunMailAdapter()
 
 const prismaFeedbacksRepository = new PrismaFeedbacksRepository()
 const prismaUsersRepository = new PrismaUsersRepository()
 
 routes.post('/feedbacks', EnsureAuthenticated, async (req, res) => {
-  console.log('here')
-
   const { type, comment, screenshot } = req.body
 
   const submitFeedbackUseCase = new SubmitFeedbackUseCase(
     prismaFeedbacksRepository,
     prismaUsersRepository,
-    nodemailerMailAdapter,
+    mailgunMailAdapter,
   )
 
   await submitFeedbackUseCase.execute({

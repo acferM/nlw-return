@@ -1,4 +1,5 @@
 export interface SendMailDTO {
+  to: string
   subject: string
   body: string
 }
