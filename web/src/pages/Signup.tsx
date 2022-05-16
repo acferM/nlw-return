@@ -38,7 +38,7 @@ export function Signup() {
 
       setIsRegistering(false)
     }
-  }, [])
+  }, [name, email, password])
 
   return (
     <div className="w-[100%] h-[90vh] flex items-center justify-center">
