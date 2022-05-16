@@ -25,9 +25,9 @@ export class SubmitFeedbackUseCase {
     creatorId,
     screenshot
   }: SubmitFeedbackUseCaseRequest) {
-    const userExists = await this.usersRepository.findById(creatorId)
+    const user = await this.usersRepository.findById(creatorId)
 
-    if (!userExists) {
+    if (!user) {
       throw new AppError('User not found')
     }
 
@@ -52,6 +52,7 @@ export class SubmitFeedbackUseCase {
 
     await this.mailAdapter.sendMail({
       subject: 'Novo feedback',
+      to: user.email,
       body: [
         '<html>',
         '<div style="font-family: sans-serif; font-size: 16px; color: #111;">',
