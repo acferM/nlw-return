@@ -1,4 +1,5 @@
 import { FakeHashAdapter } from "../adapters/fakes/hash/fake-hash-adapter"
+import { AppError } from "../errors/AppError"
 import { FakeUsersRepository } from "../repositories/fakes/fake-users-repository"
 import { CreateUserUseCase } from "./create-user-use-case"
 
@@ -39,6 +40,6 @@ describe('Create User Use Case', () => {
       name: 'John Doe2',
       email: 'fake@email.com',
       password: '123456'
-    })).rejects.toThrow()
+    })).rejects.toBeInstanceOf(AppError)
   })
 })

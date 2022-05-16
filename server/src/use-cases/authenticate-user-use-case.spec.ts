@@ -1,42 +1,30 @@
+import { FakeHashAdapter } from "../adapters/fakes/hash/fake-hash-adapter";
 import { AppError } from "../errors/AppError";
+import { FakeUsersRepository } from "../repositories/fakes/fake-users-repository";
 import { AuthenticateUserUseCase } from "./authenticate-user-use-case";
 
-type FakeUsersRepository = {
-  users: any[]
-  create: (data: any) => any
-  findByEmail: (email: string) => any
-}
-
-const usersRepository: FakeUsersRepository = {
-  users: [],
-  create(data: any) {
-    this.users.push({ ...data, password: `hashed-${data.password}` });
-    return data;
-  },
-  findByEmail(email: string) {
-    return this.users.find(user => user.email === email);
-  }
-}
-
-const hashAdapter = {
-  hash: async (payload: string) => `hashed-${payload}`,
-  compare: async (payload: string, hashed: string) => payload === hashed.replace('hashed-', '')
-}
-
-const authenticateUser = new AuthenticateUserUseCase(
-  usersRepository,
-  hashAdapter,
-);
+let fakeUsersRepository: FakeUsersRepository
+let fakeHashAdapter: FakeHashAdapter
+let authenticateUser: AuthenticateUserUseCase
 
 describe('Authenticate User Use Case', () => {
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository()
+    fakeHashAdapter = new FakeHashAdapter()
+    authenticateUser = new AuthenticateUserUseCase(
+      fakeUsersRepository,
+      fakeHashAdapter
+    )
+  })
+
   it('Should be able to authenticate a user', async () => {
     const user = {
-      id: 'fake-id',
+      name: 'fake-name',
       email: 'user@example.com',
       password: '123456',
     }
 
-    await usersRepository.create(user)
+    await fakeUsersRepository.create(user)
 
     const response = await authenticateUser.execute(user)
 
@@ -53,12 +41,12 @@ describe('Authenticate User Use Case', () => {
 
   it('Should not be able to authenticate a user with wrong email', async () => {
     const user = {
-      id: 'fake-id',
+      name: 'fake-name',
       email: 'user@example.com',
       password: '123456',
     }
 
-    await usersRepository.create(user)
+    await fakeUsersRepository.create(user)
 
     await expect(authenticateUser.execute({
       email: 'wrong@email.com',
@@ -68,12 +56,12 @@ describe('Authenticate User Use Case', () => {
 
   it('Should not be able to authenticate a user with wrong password', async () => {
     const user = {
-      id: 'fake-id',
+      name: 'fake-name',
       email: 'user@example.com',
       password: '123456',
     }
 
-    await usersRepository.create(user)
+    await fakeUsersRepository.create(user)
 
     await expect(authenticateUser.execute({
       email: 'user@example.com',
