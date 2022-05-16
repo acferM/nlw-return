@@ -19,13 +19,18 @@ const mailgunMailAdapter = new MailgunMailAdapter()
 const prismaFeedbacksRepository = new PrismaFeedbacksRepository()
 const prismaUsersRepository = new PrismaUsersRepository()
 
+const mailAdapters = {
+  mailgun: mailgunMailAdapter,
+  nodemailer: nodemailerMailAdapter,
+}
+
 routes.post('/feedbacks', EnsureAuthenticated, async (req, res) => {
   const { type, comment, screenshot } = req.body
 
   const submitFeedbackUseCase = new SubmitFeedbackUseCase(
     prismaFeedbacksRepository,
     prismaUsersRepository,
-    mailgunMailAdapter,
+    mailAdapters[process.env.MAIL_SERVICE! as 'mailgun' | 'nodemailer'],
   )
 
   await submitFeedbackUseCase.execute({
